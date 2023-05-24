@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.telias.calculadora.models.BasicCalculator
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,8 +42,7 @@ class MainActivity : AppCompatActivity() {
             defaultValues()
         }
         newOperation = false
-
-        display.text = "${display.text}${button.text}"
+        appendToDisplay(button.text.toString())
         numString += button.text
     }
 
@@ -86,11 +86,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculate(): Double {
+        val calculator = BasicCalculator()
         return when (operador) {
-            '+' -> num1 + num2
-            '-' -> num1 - num2
-            '*' -> num1 * num2
-            '/' -> num1 / num2
+            '+' -> calculator.sum(num1, num2)
+            '-' -> calculator.subtract(num1, num2)
+            '*' -> calculator.multiply(num1, num2)
+            '/' -> calculator.divide(num1, num2)
             else -> 0.0
         }
     }
