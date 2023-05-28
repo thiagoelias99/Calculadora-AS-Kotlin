@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.telias.calculadora.models.BasicCalculator
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var display: TextView
@@ -23,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         display = findViewById<TextView>(R.id.display)
         displayResult = findViewById<TextView>(R.id.displayResult)
 
-        defaultValues()
+        useDefaultValues()
     }
 
-    private fun defaultValues() {
+    private fun useDefaultValues() {
         num1 = 0.0
         num2 = 0.0
         operador = null
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     fun handleDigitsButton(view: View) {
         val button = view as Button
         if (newOperation) {
-            defaultValues()
+            useDefaultValues()
         }
         newOperation = false
         appendToDisplay(button.text.toString())
@@ -61,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             //Se for continuação, o resultado anterior será utilizado como primeiro número
         } else if (operador != null) {
             num2 = returnCurrentDisplayNumber()
-            val result = calculate()
-            defaultValues()
+            val result = useCalculator()
+            useDefaultValues()
             num1 = result
             operador = button.text.toString()[0]
             newOperation = false
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     fun handleEqualButton(view: View) {
         if (numString.isNotEmpty() && operador != null) {
             num2 = returnCurrentDisplayNumber()
-            val result = calculate()
+            val result = useCalculator()
 
             displayResult.text = result.toString().replace(".", ",")
             newOperation = true
@@ -82,10 +81,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleClearButton(view: View) {
-        defaultValues()
+        useDefaultValues()
     }
 
-    private fun calculate(): Double {
+    private fun useCalculator(): Double {
         val calculator = BasicCalculator()
         return when (operador) {
             '+' -> calculator.sum(num1, num2)
